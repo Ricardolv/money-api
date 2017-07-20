@@ -12,5 +12,5 @@ Backend:
 
 FrontEnd:
 
-    -Angularjs 4 SPA (Single Page Application)
-    -TypeScript
+    - Angularjs 4 SPA (Single Page Application)
+    - TypeScript
