@@ -6,8 +6,11 @@ Backend:
     - JPA
     - Mysql
     - Flyway
-    - Rest
+    - APIs REST
+    - OAuth 2
+    - JSON Web Tokens - JWT
 
 FrontEnd:
 
-    -Angularjs 4
+    -Angularjs 4 SPA (Single Page Application)
+    -TypeScript
