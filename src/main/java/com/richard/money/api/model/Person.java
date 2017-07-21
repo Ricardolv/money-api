@@ -5,21 +5,24 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Data
 @EqualsAndHashCode(of = "code")
 @Entity
-@Table(name = "category")
-public class Category {
-
+@Table(name = "person")
+public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long code;
 
     @NotNull
-    @Size(min = 3, max = 20)
     private String name;
+
+    @Embedded
+    private Anddress anddress;
+
+    @NotNull
+    private Boolean active;
 
 }
