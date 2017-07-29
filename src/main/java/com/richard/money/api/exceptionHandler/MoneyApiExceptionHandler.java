@@ -2,9 +2,11 @@ package com.richard.money.api.exceptionHandler;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -57,6 +59,15 @@ public class MoneyApiExceptionHandler extends ResponseEntityExceptionHandler {
         List<Error> errors = Arrays.asList(new Error(messageUser, messageDeveloper));
 
         return handleExceptionInternal(ex, errors, new HttpHeaders(), NOT_FOUND, request);
+    }
+
+    @ExceptionHandler({ DataIntegrityViolationException.class })
+    public ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException ex,  WebRequest request) {
+        String messageUser = messageSource.getMessage("resource.not-operation-allowed", null, LocaleContextHolder.getLocale());
+        String messageDeveloper = ExceptionUtils.getRootCauseMessage(ex);
+        List<Error> errors = Arrays.asList(new Error(messageUser, messageDeveloper));
+
+        return handleExceptionInternal(ex, errors, new HttpHeaders(), BAD_REQUEST, request);
     }
 
     private List<Error> createListErrors(BindingResult bindingResult) {
