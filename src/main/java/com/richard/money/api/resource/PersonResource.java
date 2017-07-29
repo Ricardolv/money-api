@@ -41,4 +41,11 @@ public class PersonResource {
         return person != null ? ResponseEntity.ok(person) : ResponseEntity.notFound().build();
     }
 
+    @DeleteMapping("/{code}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void remove(@PathVariable Long code) {
+        personService.delete(code);
+    }
+
+
 }

@@ -24,4 +24,8 @@ public class PersonService {
     public Person findOne(Long code) {
         return personRepository.findOne(code);
     }
+
+    public void delete(Long code) {
+        personRepository.delete(code);
+    }
 }
