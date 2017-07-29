@@ -24,7 +24,7 @@ public class PersonService {
     }
 
     public Person findOne(Long code) {
-        return personRepository.findOne(code);
+        return searchPersonByCode(code);
     }
 
     public void delete(Long code) {
@@ -32,14 +32,24 @@ public class PersonService {
     }
 
     public Person update(Long code, Person person) {
+        Person personSave = searchPersonByCode(code);
+        BeanUtils.copyProperties(person, personSave, "code");
+        personRepository.save(personSave);
+        return personSave;
+    }
+
+    public void updatePropertyActive(Long code, Boolean active) {
+        Person person = searchPersonByCode(code);
+        person.setActive(active);
+        personRepository.save(person);
+    }
+
+    private Person searchPersonByCode(Long code) {
         Person personSave = personRepository.findOne(code);
 
         if (null == personSave) {
             throw new EmptyResultDataAccessException(1);
         }
-
-        BeanUtils.copyProperties(person, personSave, "code");
-        personRepository.save(personSave);
         return personSave;
     }
 }

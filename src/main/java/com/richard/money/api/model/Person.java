@@ -2,6 +2,7 @@ package com.richard.money.api.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -10,6 +11,7 @@ import javax.validation.constraints.NotNull;
 @EqualsAndHashCode(of = "code")
 @Entity
 @Table(name = "person")
+@DynamicUpdate
 public class Person {
 
     @Id
