@@ -1,5 +1,6 @@
 package com.richard.money.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.DynamicUpdate;
@@ -26,5 +27,11 @@ public class Person {
 
     @NotNull
     private Boolean active;
+
+    @Transient
+    @JsonIgnore
+    public boolean isInactive() {
+        return !this.active;
+    }
 
 }
