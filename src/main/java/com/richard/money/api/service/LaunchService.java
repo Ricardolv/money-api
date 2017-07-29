@@ -5,7 +5,6 @@ import com.richard.money.api.repository.LaunchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
@@ -15,7 +14,10 @@ public class LaunchService {
     @Autowired
     private LaunchRepository launchRepository;
 
-    @GetMapping
+    public Launch save(Launch launch) {
+        return launchRepository.save(launch);
+    }
+
     public List<Launch> findAll() {
         return launchRepository.findAll();
     }
@@ -32,4 +34,6 @@ public class LaunchService {
         }
         return launchSave;
     }
+
+
 }
