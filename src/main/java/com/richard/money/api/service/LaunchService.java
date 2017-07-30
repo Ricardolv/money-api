@@ -8,6 +8,8 @@ import com.richard.money.api.repository.filter.LaunchFilter;
 import com.richard.money.api.service.exception.PersonNonexistentOrInactiveException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,8 +36,8 @@ public class LaunchService {
         return searchLaunchByCode(code);
     }
 
-    public List<Launch> filter(LaunchFilter filter) {
-        return launchRepository.filter(filter);
+    public Page<Launch> filter(LaunchFilter filter, Pageable pageable) {
+        return launchRepository.filter(filter, pageable);
     }
 
     private Launch searchLaunchByCode(Long code) {
@@ -45,5 +47,9 @@ public class LaunchService {
             throw new EmptyResultDataAccessException(1);
         }
         return launchSave;
+    }
+
+    public void delete(Long code) {
+        launchRepository.delete(code);
     }
 }

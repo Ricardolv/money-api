@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,8 +36,8 @@ public class LaunchResource {
     private MessageSource messageSource;
 
     @GetMapping
-    public List<Launch> search(LaunchFilter launchFilter) {
-        return this.launchService.filter(launchFilter);
+    public Page<Launch> search(LaunchFilter launchFilter, Pageable pageable) {
+        return this.launchService.filter(launchFilter, pageable);
     }
 
     @GetMapping("/{code}")
@@ -57,5 +59,11 @@ public class LaunchResource {
         String messageDeveloper = ex.toString() ;
         List<MoneyApiExceptionHandler.Error> errors = Arrays.asList(new MoneyApiExceptionHandler.Error(messageUser, messageDeveloper));
         return ResponseEntity.badRequest().body(errors);
+    }
+
+    @DeleteMapping("/{code}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void remover(@PathVariable Long code) {
+        launchService.delete(code);
     }
 }
