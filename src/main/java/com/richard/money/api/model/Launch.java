@@ -1,19 +1,19 @@
 package com.richard.money.api.model;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "launch")
-@Data
+
+
 @NoArgsConstructor
 @EqualsAndHashCode(of = "code")
+@Data
+@Entity
+@Table(name = "launch")
 public class Launch {
 
     @Id
@@ -47,6 +47,5 @@ public class Launch {
     @ManyToOne
     @JoinColumn(name = "code_person")
     private Person person;
-
 
 }

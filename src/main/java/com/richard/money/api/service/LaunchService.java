@@ -4,6 +4,7 @@ import com.richard.money.api.model.Launch;
 import com.richard.money.api.model.Person;
 import com.richard.money.api.repository.LaunchRepository;
 import com.richard.money.api.repository.PersonRepository;
+import com.richard.money.api.repository.filter.LaunchFilter;
 import com.richard.money.api.service.exception.PersonNonexistentOrInactiveException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -21,7 +22,6 @@ public class LaunchService {
     private PersonRepository personRepository;
 
     public Launch save(Launch launch) {
-
         Person person = personRepository.findOne(launch.getPerson().getCode());
         if (null == person || person.isInactive()) {
             throw new PersonNonexistentOrInactiveException();
@@ -30,12 +30,12 @@ public class LaunchService {
         return launchRepository.save(launch);
     }
 
-    public List<Launch> findAll() {
-        return launchRepository.findAll();
-    }
-
     public Launch findOne(Long code) {
         return searchLaunchByCode(code);
+    }
+
+    public List<Launch> filter(LaunchFilter filter) {
+        return launchRepository.filter(filter);
     }
 
     private Launch searchLaunchByCode(Long code) {
@@ -46,6 +46,4 @@ public class LaunchService {
         }
         return launchSave;
     }
-
-
 }

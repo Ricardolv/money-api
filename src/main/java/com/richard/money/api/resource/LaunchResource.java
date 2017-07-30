@@ -4,6 +4,7 @@ package com.richard.money.api.resource;
 import com.richard.money.api.event.ResourceCreateEvent;
 import com.richard.money.api.exceptionHandler.MoneyApiExceptionHandler;
 import com.richard.money.api.model.Launch;
+import com.richard.money.api.repository.filter.LaunchFilter;
 import com.richard.money.api.service.LaunchService;
 import com.richard.money.api.service.exception.PersonNonexistentOrInactiveException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,6 @@ import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-
 @RestController
 @RequestMapping("/releases")
 public class LaunchResource {
@@ -35,8 +34,8 @@ public class LaunchResource {
     private MessageSource messageSource;
 
     @GetMapping
-    public List<Launch> listAll() {
-        return this.launchService.findAll();
+    public List<Launch> search(LaunchFilter launchFilter) {
+        return this.launchService.filter(launchFilter);
     }
 
     @GetMapping("/{code}")
