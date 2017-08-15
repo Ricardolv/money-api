@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -36,17 +37,20 @@ public class LaunchResource {
     private MessageSource messageSource;
 
     @GetMapping
+    @PreAuthorize("hasAuthority('ROLE_SEARCH_LAUNCH') and #oauth2.hasScope('read')")
     public Page<Launch> search(LaunchFilter launchFilter, Pageable pageable) {
         return this.launchService.filter(launchFilter, pageable);
     }
 
     @GetMapping("/{code}")
+    @PreAuthorize("hasAuthority('ROLE_SEARCH_LAUNCH') and #oauth2.hasScope('read')")
     public ResponseEntity<Launch> searchLaunchByCode(@PathVariable Long code) {
         Launch launch = launchService.findOne(code);
         return launch != null ? ResponseEntity.ok(launch) : ResponseEntity.notFound().build();
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ROLE_REGISTER_LAUNCH') and #oauth2.hasScope('write')")
     public ResponseEntity<Launch> create(@Valid @RequestBody Launch launch, HttpServletResponse response) {
         Launch launchSave = launchService.save(launch);
         this.publisher.publishEvent(new ResourceCreateEvent(this, response, launchSave.getCode()));
@@ -63,6 +67,7 @@ public class LaunchResource {
 
     @DeleteMapping("/{code}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('ROLE_REMOVE_LAUNCH') and #oauth2.hasScope('write')")
     public void remover(@PathVariable Long code) {
         launchService.delete(code);
     }
