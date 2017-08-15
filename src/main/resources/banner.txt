@@ -1,0 +1,11 @@
+${AnsiColor.BLACK}
+___  ___                          ___        _
+|  \/  |                         / _ \      (_)
+| .  . | ___  _ __   ___ _   _  / /_\ \_ __  _
+| |\/| |/ _ \| '_ \ / _ \ | | | |  _  | '_ \| |
+| |  | | (_) | | | |  __/ |_| | | | | | |_) | |
+\_|  |_/\___/|_| |_|\___|\__, | \_| |_/ .__/|_|
+                          __/ |       | |
+                         |___/        |_|
+
+${AnsiColor.BRIGHT_YELLOW} :: ${AnsiColor.MAGENTA} Spring Boot ${AnsiColor.CYAN} ${spring-boot.formatted-version} ${AnsiColor.BRIGHT_YELLOW} ::

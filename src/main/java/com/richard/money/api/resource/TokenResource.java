@@ -1,5 +1,7 @@
 package com.richard.money.api.resource;
 
+import com.richard.money.api.config.property.MoneyApiProperty;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,12 +15,15 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/tokens")
 public class TokenResource {
 
+    @Autowired
+    private MoneyApiProperty moneyApiProperty;
+
     @DeleteMapping("/revoke")
     public void revoke(HttpServletRequest req, HttpServletResponse resp) {
 
         Cookie refreshTokenCookie = new Cookie("refreshToken", null);
         refreshTokenCookie.setHttpOnly(true);
-        refreshTokenCookie.setSecure(false); //TODO migrar para true em producao
+        refreshTokenCookie.setSecure(moneyApiProperty.getSecurity().isEnableHttps());
         refreshTokenCookie.setPath(req.getContextPath() + "/oauth/token");
         refreshTokenCookie.setMaxAge(2592000);
 
