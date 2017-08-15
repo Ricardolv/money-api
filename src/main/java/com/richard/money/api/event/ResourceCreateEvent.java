@@ -1,14 +1,17 @@
 package com.richard.money.api.event;
 
-import lombok.Getter;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.context.ApplicationEvent;
 
-import javax.servlet.http.HttpServletResponse;
+import lombok.Getter;
 
 @Getter
 public class ResourceCreateEvent extends ApplicationEvent {
 
-    private HttpServletResponse response;
+	private static final long serialVersionUID = 1L;
+
+	private HttpServletResponse response;
     private Long code;
 
     public ResourceCreateEvent(Object source, HttpServletResponse response, Long code) {
