@@ -5,6 +5,7 @@ import com.richard.money.api.model.Person;
 import com.richard.money.api.repository.LaunchRepository;
 import com.richard.money.api.repository.PersonRepository;
 import com.richard.money.api.repository.filter.LaunchFilter;
+import com.richard.money.api.repository.projection.ResumeLaunch;
 import com.richard.money.api.service.exception.PersonNonexistentOrInactiveException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -36,6 +37,10 @@ public class LaunchService {
 
     public Page<Launch> filter(LaunchFilter filter, Pageable pageable) {
         return launchRepository.filter(filter, pageable);
+    }
+
+    public Page<ResumeLaunch> resume(LaunchFilter filter, Pageable pageable) {
+        return launchRepository.resume(filter, pageable);
     }
 
     private Launch searchLaunchByCode(Long code) {

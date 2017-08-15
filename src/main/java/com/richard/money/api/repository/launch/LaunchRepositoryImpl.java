@@ -2,6 +2,7 @@ package com.richard.money.api.repository.launch;
 
 import com.richard.money.api.model.Launch;
 import com.richard.money.api.repository.filter.LaunchFilter;
+import com.richard.money.api.repository.projection.ResumeLaunch;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -39,6 +40,29 @@ public class LaunchRepositoryImpl implements LaunchRepositoryQuery {
         return new PageImpl<>(query.getResultList(), pageable, total(filter));
     }
 
+    @Override
+    public Page<ResumeLaunch> resume(LaunchFilter filter, Pageable pageable) {
+        CriteriaBuilder builder = manager.getCriteriaBuilder();
+        CriteriaQuery<ResumeLaunch> criteria = builder.createQuery(ResumeLaunch.class);
+        Root<Launch> root = criteria.from(Launch.class);
+
+        criteria.select(builder.construct(ResumeLaunch.class
+                , root.get("code"), root.get("description")
+                , root.get("dateExpiration"), root.get("datePayment")
+                , root.get("value"), root.get("type")
+                , root.get("category").get("name")
+                , root.get("person").get("name")));
+
+
+        Predicate[] predicates = createRestrictions(filter, builder, root);
+        criteria.where(predicates);
+
+        TypedQuery<ResumeLaunch> query = manager.createQuery(criteria);
+        addRestrictionsOfPagination(query, pageable);
+
+        return new PageImpl<>(query.getResultList(), pageable, total(filter));
+    }
+
     private Predicate[] createRestrictions(LaunchFilter filter, CriteriaBuilder builder,
                                            Root<Launch> root) {
 
@@ -65,7 +89,7 @@ public class LaunchRepositoryImpl implements LaunchRepositoryQuery {
         return predicates.toArray(new Predicate[predicates.size()]);
     }
 
-    private void addRestrictionsOfPagination(TypedQuery<Launch> query, Pageable pageable) {
+    private void addRestrictionsOfPagination(TypedQuery<?> query, Pageable pageable) {
         int currencyPage = pageable.getPageNumber();
         int totalRegisterForPage = pageable.getPageSize();
         int firstRegisterPage = currencyPage * totalRegisterForPage;

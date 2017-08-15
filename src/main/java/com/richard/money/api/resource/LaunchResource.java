@@ -5,6 +5,7 @@ import com.richard.money.api.event.ResourceCreateEvent;
 import com.richard.money.api.exceptionHandler.MoneyApiExceptionHandler;
 import com.richard.money.api.model.Launch;
 import com.richard.money.api.repository.filter.LaunchFilter;
+import com.richard.money.api.repository.projection.ResumeLaunch;
 import com.richard.money.api.service.LaunchService;
 import com.richard.money.api.service.exception.PersonNonexistentOrInactiveException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,12 @@ public class LaunchResource {
     @PreAuthorize("hasAuthority('ROLE_SEARCH_LAUNCH') and #oauth2.hasScope('read')")
     public Page<Launch> search(LaunchFilter launchFilter, Pageable pageable) {
         return this.launchService.filter(launchFilter, pageable);
+    }
+
+    @GetMapping(params = "resume")
+    @PreAuthorize("hasAuthority('ROLE_SEARCH_LAUNCH') and #oauth2.hasScope('read')")
+    public Page<ResumeLaunch> resume(LaunchFilter launchFilter, Pageable pageable) {
+        return this.launchService.resume(launchFilter, pageable);
     }
 
     @GetMapping("/{code}")
