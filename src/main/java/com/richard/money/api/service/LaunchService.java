@@ -7,6 +7,7 @@ import com.richard.money.api.repository.PersonRepository;
 import com.richard.money.api.repository.filter.LaunchFilter;
 import com.richard.money.api.repository.projection.ResumeLaunch;
 import com.richard.money.api.service.exception.PersonNonexistentOrInactiveException;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
@@ -54,5 +55,35 @@ public class LaunchService {
 
     public void delete(Long code) {
         launchRepository.delete(code);
+    }
+
+    public Launch update(Long code, Launch launch) {
+        Launch launchSave = searchLaunchExist(code);
+        if (!launch.getPerson().equals(launchSave.getPerson())) {
+            valid(launch);
+        }
+
+        BeanUtils.copyProperties(launch, launchSave, "code");
+
+        return launchRepository.save(launchSave);
+    }
+
+    private void valid(Launch launch) {
+        Person person = null;
+        if (launch.getPerson().getCode() != null) {
+            person = personRepository.findOne(launch.getPerson().getCode());
+        }
+
+        if (person == null || person.isInactive()) {
+            throw new PersonNonexistentOrInactiveException();
+        }
+    }
+
+    private Launch searchLaunchExist(Long code) {
+        Launch launchSave = launchRepository.findOne(code);
+        if (launchSave == null) {
+            throw new IllegalArgumentException();
+        }
+        return launchSave;
     }
 }

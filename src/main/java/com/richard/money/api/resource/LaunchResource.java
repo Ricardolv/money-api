@@ -78,4 +78,16 @@ public class LaunchResource {
     public void remover(@PathVariable Long code) {
         launchService.delete(code);
     }
+
+
+    @PutMapping("/{code}")
+    @PreAuthorize("hasAuthority('ROLE_REGISTER_LAUNCH')")
+    public ResponseEntity<Launch> update(@PathVariable Long code, @Valid @RequestBody Launch launch) {
+        try {
+            Launch launchSave = launchService.update(code, launch);
+            return ResponseEntity.ok(launchSave);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
