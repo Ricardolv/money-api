@@ -81,9 +81,11 @@ public class LaunchService {
 
     private Launch searchLaunchExist(Long code) {
         Launch launchSave = launchRepository.findOne(code);
+
         if (launchSave == null) {
             throw new IllegalArgumentException();
         }
+
         return launchSave;
     }
 }
