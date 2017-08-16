@@ -18,8 +18,8 @@ CREATE TABLE user_permission (
 	FOREIGN KEY (code_permission) REFERENCES permission(code)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO user (code, name, email, password) values (1, 'Administrador', 'admin@moneyapi.com', '$2a$10$X607ZPhQ4EgGNaYKt3n4SONjIv9zc.VMWdEuhCuba7oLAL5IvcL5.');
-INSERT INTO user (code, name, email, password) values (2, 'Bernardo Viana', 'maria@moneyapi.com', '$2a$10$Zc3w6HyuPOPXamaMhh.PQOXvDnEsadztbfi6/RyZWJDzimE8WQjaq');
+INSERT INTO user (code, name, email, password) values (1, 'Administrador', 'admin@moneyapi.com', '$2a$10$QoRRmu0JyiwD1UVjGEEJHukJMMRloEIX/hY9PCeNVbLYy9nJbwjMW');
+INSERT INTO user (code, name, email, password) values (2, 'Bernardo Viana', 'bernardo@moneyapi.com', '$2a$10$3wP3i2xJzIMMZPfqkKzfUugkhcLPgBjpVK9LxHr5bfZbV3159tz.y');
 
 INSERT INTO permission (code, description) values (1, 'ROLE_REGISTER_CATEGORY');
 INSERT INTO permission (code, description) values (2, 'ROLE_SEARCH_CATEGORIA');
