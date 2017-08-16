@@ -46,7 +46,6 @@ public class LaunchService {
 
     private Launch searchLaunchByCode(Long code) {
         Launch launchSave = launchRepository.findOne(code);
-
         if (null == launchSave) {
             throw new EmptyResultDataAccessException(1);
         }
