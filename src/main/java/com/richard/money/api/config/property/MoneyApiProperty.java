@@ -2,7 +2,6 @@ package com.richard.money.api.config.property;
 
 import lombok.Data;
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties("money-api")
@@ -12,8 +11,12 @@ public class MoneyApiProperty {
     private final Security security = new Security();
 
     @Getter
-    @Setter
-    private String allowedOrigin = "http://localhost:8000";
+    private final Environment environment = new Environment();
+
+    @Data
+    public static class Environment {
+        private String allowedOrigin;
+    }
 
     @Data
     public static class Security {
