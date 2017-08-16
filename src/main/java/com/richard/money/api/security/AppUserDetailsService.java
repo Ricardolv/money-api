@@ -34,7 +34,7 @@ public class AppUserDetailsService implements UserDetailsService {
         String messageUser = messageSource.getMessage("message.invalid_user", null, LocaleContextHolder.getLocale());
         User user = userOptional.orElseThrow(() -> new UsernameNotFoundException(messageUser));
 
-        return new org.springframework.security.core.userdetails.User(email, user.getPassword(), getPermissions(user));
+        return new UserSystem(user, getPermissions(user));
     }
 
     private Collection<? extends GrantedAuthority> getPermissions(User user) {
