@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.Map;
 
 @Component
-@Profile({"prod"})
+@Profile({"oauth-security"})
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class RefreshTokenCookiePreProcessorFilter implements Filter {
 
