@@ -19,7 +19,7 @@ import org.springframework.security.oauth2.provider.token.store.jwk.JwkTokenStor
 
 import java.util.Arrays;
 
-@Profile("oauth-security")
+@Profile({"prod"})
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {

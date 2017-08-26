@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import java.io.IOException;
 import java.util.Map;
 
-@Profile("oauth-security")
 @Component
+@Profile({"prod"})
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class RefreshTokenCookiePreProcessorFilter implements Filter {
 
@@ -63,3 +63,4 @@ public class RefreshTokenCookiePreProcessorFilter implements Filter {
         }
     }
 }
+
